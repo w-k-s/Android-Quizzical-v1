@@ -22,11 +22,11 @@ public final class R {
     }
     public static final class drawable {
         public static final int background_score=0x7f020000;
-        public static final int background_splash=0x7f020001;
-        public static final int button_answer=0x7f020002;
-        public static final int chalkboard=0x7f020003;
-        public static final int ic_action_search=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
+        public static final int button_answer=0x7f020001;
+        public static final int chalkboard=0x7f020002;
+        public static final int ic_action_search=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int splash=0x7f020005;
     }
     public static final class id {
         public static final int btn_A=0x7f080003;
@@ -34,9 +34,7 @@ public final class R {
         public static final int btn_C=0x7f080005;
         public static final int btn_D=0x7f080006;
         public static final int listview_categories=0x7f080001;
-        public static final int menu_settings=0x7f08000b;
-        public static final int textview_appname=0x7f080009;
-        public static final int textview_developer=0x7f08000a;
+        public static final int menu_settings=0x7f080009;
         public static final int textview_score=0x7f080008;
         public static final int textview_score_heading=0x7f080007;
         public static final int textview_select_category=0x7f080000;

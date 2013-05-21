@@ -31,9 +31,6 @@ public class SplashActivity extends Activity {
 
 		// set layout
 		setContentView(R.layout.layout_splash);
-
-		//initialise ui
-		initialiseUI();
 		
 		//use handler to start CategoryListActivity after splash duration time.
 		Handler handler = new Handler();
@@ -56,6 +53,7 @@ public class SplashActivity extends Activity {
 		this.finish();
 	}
 	
+	/*
 	private void initialiseUI()
 	{
 		//initialise textviews
@@ -69,13 +67,6 @@ public class SplashActivity extends Activity {
 		//set developer name and font
 		Typeface devNameFont = Typeface.createFromAsset(getAssets(), "QuaverSerif.otf");
 		textviewDevName.setTypeface(devNameFont);
-	}
+	}*/
 	
-	@Override
-	public void onAttachedToWindow() {
-		// TODO Auto-generated method stub
-		super.onAttachedToWindow();
-		Window window = getWindow();
-		window.setFormat(PixelFormat.RGBA_8888);
-	}
 }
