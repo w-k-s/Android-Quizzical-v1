@@ -2,6 +2,7 @@ package uk.ac.hw.waqqas.quiztime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.Application;
 
@@ -15,8 +16,8 @@ import android.app.Application;
 public class QuizTimeApplication extends Application {
 
 	private static QuizTimeApplication instance;
-	private static ArrayList<String> categoriesCache;
-	private static HashMap<String, ArrayList<MCQuestion>> questionsCache;
+	private static List<String> categoriesCache;
+	private static HashMap<String, ArrayList<Question>> questionsCache;
 	private static String selectedCategory;
 	private static float score;
 
@@ -28,7 +29,7 @@ public class QuizTimeApplication extends Application {
 		
 		//initialise categories and questions caches.
 		categoriesCache = new ArrayList<String>();
-		questionsCache = new HashMap<String, ArrayList<MCQuestion>>();
+		questionsCache = new HashMap<String, ArrayList<Question>>();
 	}
 
 	//returns singleton instance of Application.
@@ -55,9 +56,14 @@ public class QuizTimeApplication extends Application {
 	/**
 	 * @return cached list of categories.
 	 */
-	public static ArrayList<String> getCachedCategoriesList() {
+	public static List<String> getCachedCategoriesList() {
 		return categoriesCache;
 	}
+	
+        public static void setCategoriesCache(List<String> categoriesCache)
+        {
+            QuizTimeApplication.categoriesCache = categoriesCache;
+        }
 
 	/**
 	 * 
@@ -73,7 +79,7 @@ public class QuizTimeApplication extends Application {
 	 * @param category name of category
 	 * @return caches questions list for cateogory
 	 */
-	public static ArrayList<MCQuestion> getCachedQuestions(String category) {
+	public static ArrayList<Question> getCachedQuestions(String category) {
 		return questionsCache.get(category);
 	}
 
@@ -85,7 +91,7 @@ public class QuizTimeApplication extends Application {
 	 * @param questions questions list
 	 */
 	public static void cacheQuestions(String category,
-			ArrayList<MCQuestion> questions) {
+			ArrayList<Question> questions) {
 		questionsCache.put(category, questions);
 	}
 
