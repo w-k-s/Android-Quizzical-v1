@@ -1,5 +1,6 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
+import com.asfour.quizzical.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

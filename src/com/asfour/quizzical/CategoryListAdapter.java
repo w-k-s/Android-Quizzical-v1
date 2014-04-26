@@ -1,4 +1,4 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import com.asfour.quizzical.R;
 
 /**Custom Base Adapter. 
  * Uses custom font in ListView

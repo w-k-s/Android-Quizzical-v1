@@ -1,4 +1,6 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
+
+import com.asfour.quizzical.R;
 
 public class Answer
 {

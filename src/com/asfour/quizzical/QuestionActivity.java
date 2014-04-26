@@ -1,4 +1,4 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.asfour.quizzical.R;
 
 /**
  * Displays unique random question to users. Highlights answers. Updates scores.

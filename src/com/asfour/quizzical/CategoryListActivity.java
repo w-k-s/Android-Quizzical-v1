@@ -1,4 +1,4 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,6 +35,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.asfour.quizzical.R;
 
 /**
  * Downloads categories, displays them to the user as a list.

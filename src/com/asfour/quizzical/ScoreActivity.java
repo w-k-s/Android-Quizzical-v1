@@ -1,4 +1,4 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.asfour.quizzical.R;
 
 /**Displays the users score as a percentage.
  * 

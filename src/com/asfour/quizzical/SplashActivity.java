@@ -1,4 +1,4 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 
 import android.app.Activity;
@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import com.asfour.quizzical.R;
 
 /**Splashscreen displayed when application is first launched.
  * 

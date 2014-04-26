@@ -1,10 +1,11 @@
-package uk.ac.hw.waqqas.quiztime;
+package com.asfour.quizzical;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.Application;
+import com.asfour.quizzical.R;
 
 /**
  * Singleton class used to pass data between activities and to store cached list
