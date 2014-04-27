@@ -35,7 +35,7 @@ public class ScoreActivity extends Activity
 	super.onCreate(savedInstanceState);
 	this.setContentView(R.layout.layout_score);
 
-	colors = new int[] { getResources().getColor(R.color.pink),
+	colors = new int[] { getResources().getColor(R.color.red),
 		getResources().getColor(R.color.orange),
 		getResources().getColor(R.color.yellow),
 		getResources().getColor(R.color.green),
