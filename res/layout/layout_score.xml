@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="50dip"
+    android:animateLayoutChanges="true"
     android:background="@drawable/background_score" >
 	<TextView
 	    android:id="@+id/textview_score_heading"
@@ -22,5 +23,16 @@
 	    android:gravity="center"
 	    android:textColor="@color/white"
 	    />
+	<TextView
+	    android:id="@+id/textview_grade"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:textSize="50dip"
+	    android:textColor="@color/red"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="50dip"
+	    android:layout_below="@+id/textview_score"
+	    android:visibility="invisible"
+	    ></TextView>
 	
 </RelativeLayout>

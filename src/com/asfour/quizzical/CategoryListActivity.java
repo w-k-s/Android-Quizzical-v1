@@ -33,6 +33,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.asfour.quizzical.R;
@@ -53,6 +54,8 @@ public class CategoryListActivity extends Activity implements
     static final String JSON_CATEGORY_NAME = "Name";
     
     private ListView categoryListView;
+    private TextView nameTextView;
+    private TextView selectCategoryView;
 
     /**
      * Initializes ListView
@@ -63,25 +66,29 @@ public class CategoryListActivity extends Activity implements
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.layout_category_list);
 
-	// initialise listview
+	nameTextView = (TextView) findViewById(R.id.textview_name);
+	selectCategoryView = (TextView) findViewById(R.id.textview_select_category);
 	categoryListView = (ListView) findViewById(R.id.listview_categories);
 	categoryListView.setOnItemClickListener(this);
 
 	// load font
-	Typeface font = Typeface.createFromAsset(getAssets(),
+	Typeface titleFont = Typeface.createFromAsset(getAssets(), "Bender-Inline.otf");
+	nameTextView.setTypeface(titleFont);
+	nameTextView.setText(R.string.app_name);
+	Typeface chalkFont = Typeface.createFromAsset(getAssets(),
 		"ArchitectsDaughter.ttf");
 
 	// set default list view text
 	TextView textviewEmpty = new TextView(this);
 	textviewEmpty
 		.setText("Categories could not be downloaded.\nPlease check your internet connection.");
-	textviewEmpty.setTypeface(font);
+	textviewEmpty.setTypeface(chalkFont);
 
 	categoryListView.setEmptyView(textviewEmpty);
 
 	// set font on select category textview
 	TextView selectCategoryTextView = (TextView) findViewById(R.id.textview_select_category);
-	selectCategoryTextView.setTypeface(font);
+	selectCategoryTextView.setTypeface(chalkFont);
 
 	// download categories
 	new DownloadCategoriesTask().execute();
@@ -179,6 +186,7 @@ public class CategoryListActivity extends Activity implements
 		return;
 	    }
 
+	    doAnimation();
 	    // if categories downloaded, set adapter to list view.
 	    // adapter subclasses in order to use custom fonts in listView.
 	    CategoryListAdapter adapter = new CategoryListAdapter(
@@ -195,6 +203,11 @@ public class CategoryListActivity extends Activity implements
 	   // super.onCancelled(result);
 //	    if(this.progressDialog != null)
 //		this.progressDialog.dismiss();
+	}
+	
+	private void doAnimation(){
+	    RelativeLayout.LayoutParams titleParams = (RelativeLayout.LayoutParams) nameTextView.getLayoutParams();
+	    titleParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 	}
 	
 	/**

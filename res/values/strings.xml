@@ -8,5 +8,5 @@
 	<string name="err_fetching_questions">Questions couldn\'t be downloaded. Please check your internet connection.</string>
 	<string name="err_no_questions">Questions for this category couldn\'t be loaded.</string>
 	<string name="text_select_category">Select a category:</string>
-	<string name="text_score_heading">You scored: </string>
+	<string name="text_score_heading">You scored </string>
 </resources>
