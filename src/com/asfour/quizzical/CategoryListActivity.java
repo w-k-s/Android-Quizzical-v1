@@ -32,11 +32,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.asfour.quizzical.R;
+import com.asfour.utilities.NetworkUtilities;
 
 /**
  * Downloads categories, displays them to the user as a list.
@@ -53,10 +56,13 @@ public class CategoryListActivity extends Activity implements
     static final String QUESTIONS_URL = "http://asfour-quizzical.appspot.com/questions?category=%s";
     static final String JSON_CATEGORY_NAME = "Name";
     
+    private TextView titleTextView;
+    private TextView downloadMessageTextView;
+    private ProgressBar downloadingProgressBar;
     private ListView categoryListView;
-    private TextView nameTextView;
-    private TextView selectCategoryView;
+    private LinearLayout downloadingLayout;
 
+    private boolean categoriesDownloaded = false;
     /**
      * Initializes ListView
      */
@@ -64,37 +70,42 @@ public class CategoryListActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState)
     {
 	super.onCreate(savedInstanceState);
-	setContentView(R.layout.layout_category_list);
+	
 
-	nameTextView = (TextView) findViewById(R.id.textview_name);
-	selectCategoryView = (TextView) findViewById(R.id.textview_select_category);
-	categoryListView = (ListView) findViewById(R.id.listview_categories);
-	categoryListView.setOnItemClickListener(this);
-
-	// load font
-	Typeface titleFont = Typeface.createFromAsset(getAssets(), "Bender-Inline.otf");
-	nameTextView.setTypeface(titleFont);
-	nameTextView.setText(R.string.app_name);
-	Typeface chalkFont = Typeface.createFromAsset(getAssets(),
-		"ArchitectsDaughter.ttf");
-
-	// set default list view text
-	TextView textviewEmpty = new TextView(this);
-	textviewEmpty
-		.setText("Categories could not be downloaded.\nPlease check your internet connection.");
-	textviewEmpty.setTypeface(chalkFont);
-
-	categoryListView.setEmptyView(textviewEmpty);
-
-	// set font on select category textview
-	TextView selectCategoryTextView = (TextView) findViewById(R.id.textview_select_category);
-	selectCategoryTextView.setTypeface(chalkFont);
-
-	// download categories
-	new DownloadCategoriesTask().execute();
+	initView();
 
     }
 
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        
+        if(!categoriesDownloaded){
+            new DownloadCategoriesTask().execute();
+        }
+    }
+    
+    private void initView(){
+	setContentView(R.layout.layout_category_list);
+	titleTextView = (TextView) findViewById(R.id.textview_title);
+	downloadMessageTextView = (TextView) findViewById(R.id.textview_download_message);
+	downloadingProgressBar = (ProgressBar) findViewById(R.id.progressbar_downloading);
+	categoryListView = (ListView) findViewById(R.id.listview_categories);
+	downloadingLayout = (LinearLayout) findViewById(R.id.layout_downloading);
+	
+	titleTextView.setText(R.string.app_name);
+	
+	Typeface titleFont = Typeface.createFromAsset(getAssets(), "Bender-Inline.otf");
+	Typeface chalkFont = Typeface.createFromAsset(getAssets(),
+		"ArchitectsDaughter.ttf");
+	
+	titleTextView.setTypeface(titleFont);
+	downloadMessageTextView.setTypeface(chalkFont);
+	categoryListView.setOnItemClickListener(this);
+	
+    }
+    
     /**
      * Event Handler when a category is clicked. Loads questions and starts
      * QuestionActivity
@@ -137,10 +148,15 @@ public class CategoryListActivity extends Activity implements
 	@Override
 	protected void onPreExecute()
 	{
-	    // show progress dialog
-//	    progressDialog = ProgressDialog.show(CategoryListActivity.this,
-//		    "Loading", "Downloading Categories", true);
-//	    progressDialog.setCancelable(true);
+	    boolean isOnline = NetworkUtilities.isConnectedToInternet(getApplicationContext());
+	    if(!isOnline){
+		LinearLayout.LayoutParams progressBarParams = (LinearLayout.LayoutParams) downloadingProgressBar.getLayoutParams();
+		LinearLayout.LayoutParams downloadMessageParams = (LinearLayout.LayoutParams) downloadMessageTextView.getLayoutParams();
+		progressBarParams.weight = 0;
+		downloadMessageParams.weight = 1;
+		downloadMessageTextView.setText("No Internet Connection");
+		this.cancel(true);
+	    }
 	}
 
 	@Override
@@ -183,10 +199,13 @@ public class CategoryListActivity extends Activity implements
 		Toast.makeText(CategoryListActivity.this,
 			R.string.err_fetching_categories, Toast.LENGTH_LONG)
 			.show();
+		categoryListView.setAdapter(new CategoryListAdapter(CategoryListActivity.this,Collections.<String>emptyList()));
 		return;
 	    }
 
-	    doAnimation();
+	    RelativeLayout.LayoutParams titleParams = (RelativeLayout.LayoutParams) titleTextView.getLayoutParams();
+	    titleParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+	    downloadingLayout.setVisibility(View.GONE);
 	    // if categories downloaded, set adapter to list view.
 	    // adapter subclasses in order to use custom fonts in listView.
 	    CategoryListAdapter adapter = new CategoryListAdapter(
@@ -194,6 +213,7 @@ public class CategoryListActivity extends Activity implements
 		    QuizTimeApplication.getCachedCategoriesList());
 
 	    categoryListView.setAdapter(adapter);
+	    categoriesDownloaded = true;
 	}
 
 	@Override
@@ -204,11 +224,7 @@ public class CategoryListActivity extends Activity implements
 //	    if(this.progressDialog != null)
 //		this.progressDialog.dismiss();
 	}
-	
-	private void doAnimation(){
-	    RelativeLayout.LayoutParams titleParams = (RelativeLayout.LayoutParams) nameTextView.getLayoutParams();
-	    titleParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-	}
+
 	
 	/**
 	 * retrieves HTML from given URL
@@ -260,6 +276,11 @@ public class CategoryListActivity extends Activity implements
 	@Override
 	protected void onPreExecute()
 	{
+	   if(!NetworkUtilities.isConnectedToInternet(getApplicationContext())){
+	       Toast.makeText(getApplicationContext(), "No Internet Connection.", Toast.LENGTH_LONG).show();
+	       return;
+	   }
+	    
 	    // show progress dialog to indicate questions are being downloaded.
 	    progressDialog = ProgressDialog.show(CategoryListActivity.this,
 		    "Loading", "Downloading Questions", true);
