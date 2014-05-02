@@ -50,6 +50,7 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/layout_downloading"
         android:layout_margin="15dip" >
+        <requestFocus/>
     </ListView>
 
 </RelativeLayout>

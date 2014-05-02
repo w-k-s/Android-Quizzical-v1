@@ -27,7 +27,7 @@ public class ScoreActivity extends Activity
     private TextView textviewScore;
     private TextView textviewGrade;
     
-    private static final String[] grades = {"E","D","C","B","A+"};
+    private static final String[] grades = {"D","C","B","A","A+"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
